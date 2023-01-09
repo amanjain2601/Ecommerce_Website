@@ -16,7 +16,7 @@ const Product = ({ product }) => {
       <img src={product.images[0].url} alt={product.name} />
       <p>{product.name}</p>
       <div>
-        <ReactStars {...options} /> <span>({product.numOfReviews}</span>
+        <ReactStars {...options} /> <span>({product.numOfReviews})</span>
       </div>
       <span>{`$${product.price}`}</span>
     </Link>

@@ -6,6 +6,11 @@ import {
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAIL,
   CLEAR_ERRORS,
+  LOAD_USER_REQUEST,
+  LOAD_USER_FAIL,
+  LOAD_USER_SUCCESS,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
 } from '../constants/userConstants';
 
 import axios from 'axios';
@@ -36,8 +41,10 @@ export const login = (email, password) => async (dispatch) => {
 export const register = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
+
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    const { data } = await axios.post('/api/v1/register', userData, config);
+
+    const { data } = await axios.post(`/api/v1/register`, userData, config);
 
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
@@ -45,6 +52,37 @@ export const register = (userData) => async (dispatch) => {
       type: REGISTER_USER_FAIL,
       payload: error.response.data.message,
     });
+  }
+};
+
+//load the user
+export const loadUser = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
+
+    const { data } = await axios.get('/api/v1/me');
+
+    dispatch({
+      type: LOAD_USER_SUCCESS,
+      payload: data.user,
+    });
+  } catch (error) {
+    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+  }
+};
+
+//logout the user
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.get('/api/v1/logout');
+
+    dispatch({
+      type: LOGOUT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
   }
 };
 

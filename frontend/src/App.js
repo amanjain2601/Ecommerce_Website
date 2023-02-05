@@ -1,6 +1,6 @@
 import './App.css';
 import Header from './component/layout/Header/Header.js';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import WebFont from 'webfontloader';
 import React from 'react';
 import Footer from './component/layout/Footer/Footer.js';
@@ -13,9 +13,11 @@ import { loadUser } from './actions/userAction';
 import store from './store';
 import UserOptions from './component/layout/Header/UserOptions.js';
 import { useSelector } from 'react-redux';
+import Profile from './component/User/Profile.js';
+import UpdateProfile from './component/User/UpdateProfile.js';
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
   React.useEffect(() => {
     WebFont.load({
@@ -37,6 +39,28 @@ function App() {
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/products/:keyword" element={<Products />} />
         <Route exact path="/Search" element={<Search />} />
+        <Route
+          exact
+          path="/account"
+          element={
+            !loading && !isAuthenticated ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <Profile />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/me/update"
+          element={
+            !loading && !isAuthenticated ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <UpdateProfile />
+            )
+          }
+        />
         <Route exact path="/login" element={<LoginSignUp />} />
       </Routes>
       <Footer />

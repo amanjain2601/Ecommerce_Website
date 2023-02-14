@@ -92,7 +92,7 @@ const UpdateProfile = () => {
                     required
                     name="name"
                     value={name}
-                    onChange={updateProfileDataChange}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
                 <div className="updateProfileEmail">
@@ -103,7 +103,7 @@ const UpdateProfile = () => {
                     required
                     name="email"
                     value={email}
-                    onChange={updateProfileDataChange}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -118,7 +118,7 @@ const UpdateProfile = () => {
                 </div>
                 <input
                   type="submit"
-                  value="updateProfile"
+                  value="Update"
                   className="updateProfileBtn"
                 />
               </form>

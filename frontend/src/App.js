@@ -1,8 +1,9 @@
 import './App.css';
+import axios from 'axios';
 import Header from './component/layout/Header/Header.js';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import WebFont from 'webfontloader';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from './component/layout/Footer/Footer.js';
 import Home from './component/Home/Home.js';
 import ProductDetails from './component/Product/ProductDetails.js';
@@ -20,11 +21,23 @@ import ForgotPassword from './component/User/ForgotPassword.js';
 import ResetPassword from './component/User/ResetPassword.js';
 import Cart from './component/Cart/Cart.js';
 import Shipping from './component/Cart/Shipping.js';
+import ConfirmOrder from './component/Cart/ConfirmOrder.js';
+import Payment from './component/Cart/Payment.js';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
-  React.useEffect(() => {
+  const [stripeApiKey, setStripeApiKey] = useState('');
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get('/api/v1/stripeapikey');
+
+    setStripeApiKey(data.stripeApiKey);
+  }
+
+  useEffect(() => {
     WebFont.load({
       google: {
         families: ['Roboto', 'Droid Sans', 'Chilanka'],
@@ -32,7 +45,17 @@ function App() {
     });
 
     store.dispatch(loadUser());
+
+    getStripeApiKey();
   }, []);
+
+  const WrapThePaymentComponent = () => {
+    return (
+      <Elements stripe={loadStripe(stripeApiKey)}>
+        <Payment />
+      </Elements>
+    );
+  };
 
   return (
     <div>
@@ -84,9 +107,7 @@ function App() {
           element={<ResetPassword />}
         />
         <Route exact path="/login" element={<LoginSignUp />} />
-
         <Route exact path="/Cart" element={<Cart />} />
-
         <Route
           exact
           path="/shipping"
@@ -98,7 +119,31 @@ function App() {
             )
           }
         />
+        <Route
+          exact
+          path="/order/confirm"
+          element={
+            !loading && !isAuthenticated ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <ConfirmOrder />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/process/payment"
+          element={
+            !loading && !isAuthenticated ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              WrapThePaymentComponent()
+            )
+          }
+        />
       </Routes>
+
       <Footer />
     </div>
   );

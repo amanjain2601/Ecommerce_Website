@@ -25,6 +25,9 @@ import ConfirmOrder from './component/Cart/ConfirmOrder.js';
 import Payment from './component/Cart/Payment.js';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import OrderSuccess from './component/Cart/OrderSuccess.js';
+import MyOrders from './component/Order/MyOrders.js';
+import OrderDetails from './component/Order/OrderDetails.js';
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -71,7 +74,7 @@ function App() {
           exact
           path="/account"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <Profile />
@@ -82,7 +85,7 @@ function App() {
           exact
           path="/me/update"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <UpdateProfile />
@@ -93,7 +96,7 @@ function App() {
           exact
           path="/password/update"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <UpdatePassword />
@@ -112,7 +115,7 @@ function App() {
           exact
           path="/shipping"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <Shipping />
@@ -123,7 +126,7 @@ function App() {
           exact
           path="/order/confirm"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <ConfirmOrder />
@@ -135,10 +138,46 @@ function App() {
           exact
           path="/process/payment"
           element={
-            !loading && !isAuthenticated ? (
+            !loading && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               WrapThePaymentComponent()
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/success"
+          element={
+            !loading && isAuthenticated === false ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <OrderSuccess />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/orders"
+          element={
+            !loading && isAuthenticated === false ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <MyOrders />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/order/:id"
+          element={
+            !loading && isAuthenticated === false ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <OrderDetails />
             )
           }
         />

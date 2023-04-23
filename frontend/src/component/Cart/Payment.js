@@ -115,7 +115,7 @@ const Payment = () => {
       alert.error(error);
       dispatch(clearErrors());
     }
-  }, [dispatch, error, clearErrors, alert]);
+  }, [dispatch, error, alert]);
 
   return (
     <Fragment>

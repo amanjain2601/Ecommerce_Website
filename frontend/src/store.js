@@ -7,8 +7,10 @@ import {
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {
+  newProductReducer,
   newReviewReducer,
   productDetailsReducer,
+  productsReducer,
   productReducer,
 } from './reducers/productReducer';
 import {
@@ -24,7 +26,7 @@ import {
 } from './reducers/orderReducer';
 
 const reducer = combineReducers({
-  products: productReducer,
+  products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
   profile: profileReducer,
@@ -34,6 +36,8 @@ const reducer = combineReducers({
   myOrders: myOrdersReducer,
   orderDetails: orderDetailsReducer,
   newReview: newReviewReducer,
+  newProduct: newProductReducer,
+  product: productReducer,
 });
 
 let initialState = {

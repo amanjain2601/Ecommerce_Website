@@ -28,6 +28,10 @@ import { loadStripe } from '@stripe/stripe-js';
 import OrderSuccess from './component/Cart/OrderSuccess.js';
 import MyOrders from './component/Order/MyOrders.js';
 import OrderDetails from './component/Order/OrderDetails.js';
+import DashBoard from './component/admin/DashBoard.js';
+import ProductList from './component/admin/ProductList.js';
+import NewProduct from './component/admin/NewProduct';
+import UpdateProduct from './component/admin/UpdateProduct';
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -74,7 +78,7 @@ function App() {
           exact
           path="/account"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <Profile />
@@ -85,7 +89,7 @@ function App() {
           exact
           path="/me/update"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <UpdateProfile />
@@ -96,7 +100,7 @@ function App() {
           exact
           path="/password/update"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <UpdatePassword />
@@ -115,7 +119,7 @@ function App() {
           exact
           path="/shipping"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <Shipping />
@@ -126,7 +130,7 @@ function App() {
           exact
           path="/order/confirm"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <ConfirmOrder />
@@ -138,7 +142,7 @@ function App() {
           exact
           path="/process/payment"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               WrapThePaymentComponent()
@@ -150,7 +154,7 @@ function App() {
           exact
           path="/success"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <OrderSuccess />
@@ -162,7 +166,7 @@ function App() {
           exact
           path="/orders"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <MyOrders />
@@ -174,10 +178,62 @@ function App() {
           exact
           path="/order/:id"
           element={
-            !loading && isAuthenticated === false ? (
+            loading === false && isAuthenticated === false ? (
               <Navigate replace to={'/login'} />
             ) : (
               <OrderDetails />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/dashboard"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <DashBoard />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/products"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <ProductList />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/product"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <NewProduct />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/product/:id"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <UpdateProduct />
             )
           }
         />

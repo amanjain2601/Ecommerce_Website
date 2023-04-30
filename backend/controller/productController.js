@@ -234,13 +234,19 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     (rev) => rev._id.toString() !== req.query.id.toString()
   );
 
-  let sumOfAllRating = 0;
+  let avg = 0;
 
   reviews.forEach((rev) => {
-    sumOfAllRating += rev.rating;
+    avg += rev.rating;
   });
 
-  const ratings = sumOfAllRating / reviews.length;
+  let ratings = 0;
+
+  if (reviews.length === 0) {
+    ratings = 0;
+  } else {
+    ratings = avg / reviews.length;
+  }
 
   const numOfReviews = reviews.length;
 

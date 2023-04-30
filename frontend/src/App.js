@@ -32,6 +32,12 @@ import DashBoard from './component/admin/DashBoard.js';
 import ProductList from './component/admin/ProductList.js';
 import NewProduct from './component/admin/NewProduct';
 import UpdateProduct from './component/admin/UpdateProduct';
+import OrderList from './component/admin/OrderList.js';
+import ProcessOrder from './component/admin/ProcessOrder';
+import UsersList from './component/admin/UsersList';
+import UpdateUser from './component/admin/UpdateUser';
+import ProductReviews from './component/admin/ProductReviews';
+import NotFound from './component/layout/Not Found/NotFound';
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -237,6 +243,73 @@ function App() {
             )
           }
         />
+
+        <Route
+          exact
+          path="/admin/orders"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <OrderList />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/order/:id"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <ProcessOrder />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/users"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <UsersList />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/user/:id"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <UpdateUser />
+            )
+          }
+        />
+
+        <Route
+          exact
+          path="/admin/reviews"
+          element={
+            loading === false &&
+            (isAuthenticated === false || (user && user.role !== 'admin')) ? (
+              <Navigate replace to={'/login'} />
+            ) : (
+              <ProductReviews />
+            )
+          }
+        />
+
+        <Route exact path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />

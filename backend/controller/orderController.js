@@ -12,7 +12,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     taxPrice,
     shippingPrice,
     totalPrice,
-  } = req.body;
+  } = req.body.order;
 
   const order = await Order.create({
     shippingInfo,

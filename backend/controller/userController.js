@@ -53,11 +53,6 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.logOut = catchAsyncErrors(async (req, res, next) => {
-  res.cookie('token', null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
-  });
-
   res.status(200).json({
     success: true,
     message: 'Logged out',
@@ -169,7 +164,8 @@ exports.updateProfile = catchAsyncErrors(async (req, res, err) => {
     email: req.body.email,
   };
 
-  if (req.body.avatar !== '') {
+  if (req.body.avatar !== 'undefined') {
+    console.log('executed');
     const user = await User.findById(req.user.id);
 
     const imageId = user.avatar.public_id;

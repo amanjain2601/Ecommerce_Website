@@ -71,7 +71,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const resetToken = user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordUrl = `https://steady-salamander-e90c7c.netlify.app/password/reset/${resetToken}`;
+  const resetPasswordUrl = `https://effulgent-dango-3c22af.netlify.app/password/reset/${resetToken}`;
 
   const message = `Your Password reset token is :- \n\n ${resetPasswordUrl} \n\n If you have not requested this email please ignore it`;
 

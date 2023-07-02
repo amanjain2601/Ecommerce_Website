@@ -15,11 +15,10 @@ import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import { Button } from '@material-ui/core';
 import { UPDATE_ORDER_RESET } from '../../constants/orderConstants';
 import './ProcessOrder.css';
-import { useNavigate } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
 
 const ProcessOrder = () => {
-  const navigate = useNavigate();
   const params = useParams();
 
   const { order, error, loading } = useSelector((state) => state.orderDetails);

@@ -34,7 +34,7 @@ const Home = () => {
             <h1>FIND AMAZING PRODUCTS BELOW</h1>
             <a href="#container">
               <button>
-                Scroll <CgMouse />
+                Products <CgMouse />
               </button>
             </a>
           </div>

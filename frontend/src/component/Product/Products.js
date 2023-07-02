@@ -19,6 +19,8 @@ const categories = [
   'Attire',
   'Camera',
   'SmartPhones',
+  'Jewelery',
+  'Electronics',
 ];
 
 const Products = () => {
@@ -35,7 +37,7 @@ const Products = () => {
     loading,
     error,
     products,
-    productsCount,
+
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.products);
@@ -58,8 +60,6 @@ const Products = () => {
 
     dispatch(getProduct(keyword, currentPage, price, category, ratings));
   }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);
-
-  // let count = filteredProductsCount;
 
   return (
     <Fragment>
@@ -121,7 +121,7 @@ const Products = () => {
               <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={resultPerPage}
-                totalItemsCount={productsCount}
+                totalItemsCount={filteredProductsCount}
                 onChange={setCurrentPageNo}
                 nextPageText="Next"
                 prevPageText="Prev"

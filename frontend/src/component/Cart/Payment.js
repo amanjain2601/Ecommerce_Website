@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom';
 import { clearErrors } from '../../actions/orderAction';
 import { createOrder } from '../../actions/orderAction';
 
+import { BASE_URL } from '../../GetBaseUrl/getBaseUrl';
+
 const Payment = () => {
   const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
   const navigate = useNavigate();
@@ -60,7 +62,7 @@ const Payment = () => {
         },
       };
       const { data } = await axios.post(
-        `https://ecommerceapp-backend-d80p.onrender.com/api/v1/payment/process`,
+        `${BASE_URL}/api/v1/payment/process`,
         { paymentData, tokenData: localStorage.getItem('token') },
         config
       );

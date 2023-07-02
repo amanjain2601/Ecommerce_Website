@@ -5,7 +5,6 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, forgotPassword } from '../../actions/userAction';
 import { useAlert } from 'react-alert';
-import { useNavigate } from 'react-router-dom';
 import Metadata from '../layout/Metadata';
 
 const ForgotPassword = () => {

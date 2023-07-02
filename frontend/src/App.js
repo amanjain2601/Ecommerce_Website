@@ -38,6 +38,7 @@ import UsersList from './component/admin/UsersList';
 import UpdateUser from './component/admin/UpdateUser';
 import ProductReviews from './component/admin/ProductReviews';
 import NotFound from './component/layout/Not Found/NotFound';
+import { BASE_URL } from './GetBaseUrl/getBaseUrl';
 
 function App() {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
@@ -50,13 +51,10 @@ function App() {
         'Content-Type': 'application/json',
       },
     };
-    const { data } = await axios.post(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/stripeapikey`,
-      {
-        tokenData: localStorage.getItem('token'),
-        config,
-      }
-    );
+    const { data } = await axios.post(`${BASE_URL}/api/v1/stripeapikey`, {
+      tokenData: localStorage.getItem('token'),
+      config,
+    });
 
     setStripeApiKey(data.stripeApiKey);
   }

@@ -22,6 +22,8 @@ import {
 
 import axios from 'axios';
 
+import { BASE_URL } from '../GetBaseUrl/getBaseUrl';
+
 // Create Order
 export const createOrder = (order) => async (dispatch) => {
   try {
@@ -34,7 +36,7 @@ export const createOrder = (order) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/order/new`,
+      `${BASE_URL}/api/v1/order/new`,
       { tokenData: localStorage.getItem('token'), order },
       config
     );
@@ -59,7 +61,7 @@ export const myOrders = () => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/orders/me`,
+      `${BASE_URL}/api/v1/orders/me`,
       { tokenData: localStorage.getItem('token') },
       config
     );
@@ -85,7 +87,7 @@ export const getAllOrders = () => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/admin/orders`,
+      `${BASE_URL}/api/v1/admin/orders`,
       { tokenData: localStorage.getItem('token') },
       config
     );
@@ -106,7 +108,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     const { data } = await axios.put(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/admin/order/${id}`,
+      `${BASE_URL}/api/v1/admin/order/${id}`,
       order,
       config
     );
@@ -125,9 +127,7 @@ export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
 
-    const { data } = await axios.delete(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/admin/order/${id}`
-    );
+    const { data } = await axios.delete(`${BASE_URL}/api/v1/admin/order/${id}`);
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
@@ -148,13 +148,10 @@ export const getOrderDetails = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `https://ecommerceapp-backend-d80p.onrender.com/api/v1/order/${id}`,
-      {
-        tokenData: localStorage.getItem('token'),
-        config,
-      }
-    );
+    const { data } = await axios.post(`${BASE_URL}/api/v1/order/${id}`, {
+      tokenData: localStorage.getItem('token'),
+      config,
+    });
 
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
